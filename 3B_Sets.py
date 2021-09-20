@@ -40,31 +40,19 @@ print(*res, sep = ' ')
 # https://contest.yandex.ru/contest/28964/problems/D/
 
 Nmax = int(input())
-possible = [2]*(Nmax+1)
-the_end = False
+possible = set(range(1, Nmax+1))
+not_possible = set()
 
-def guess(nums, ans, possible):
+new_input = input().strip()
+while new_input != 'HELP':
+    nums = set(map(int, new_input.split()))
+    ans = input().strip()
     if ans == 'NO':
-        for x in nums:
-            possible[x] = 0
+        possible.difference_update(nums)
     elif ans == 'YES':
-        for x in nums:
-            possible[x] = 1
-        for i in range(Nmax+1):
-            if i not in nums and possible[i] == 1:
-                possible[i] = 0
-            
-while not the_end:
-    new_input = input()
-    if str(new_input) == 'HELP':
-        the_end = True
-        break
-    else:
-        nums = [int(x) for x in new_input.split()]
-        ans = str(input())
-        guess(nums,ans,possible)
-        
-print(*[i for i in range(Nmax+1) if possible[i] == 1], sep = ' ')
+        possible.intersection_update(nums)
+    new_input = input().strip()
+print(*sorted(possible), sep=' ')
 
 
 # https://contest.yandex.ru/contest/28964/problems/E/
