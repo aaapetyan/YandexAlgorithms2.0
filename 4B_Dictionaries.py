@@ -80,3 +80,28 @@ for i in range(len(all_votes)):
     print_line += all_votes[i][1] + ' ' + str(all_votes[i][2][0]) + '\n'
     
 print(print_line)
+
+# https://contest.yandex.ru/contest/28970/problems/E/
+
+mydict = dict()
+with open('input.txt','r') as f:
+    lines = f.readlines()
+    i = 1
+    k = 1
+    while i < len(lines) - 1:
+        count = int(lines[i])
+        if count == 0:
+            topic = lines[i+1]
+            mydict[topic] = [k]
+            i += 3
+        else:
+            for item in mydict:
+                if count in mydict.get(item):
+                    mydict[item].append(k)
+            i += 2
+        k += 1
+ans = []
+for item in mydict:
+    val = mydict.get(item)
+    ans.append((len(val),-min(val),item))
+print(max(ans)[2])
